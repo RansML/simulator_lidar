@@ -1,0 +1,5 @@
+# simulator_lidar
+
+This is a LIDAR simulator. A simple world with moving vehicles can be set up by instantiating "Obstacle" class. 
+
+
