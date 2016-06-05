@@ -14,4 +14,6 @@ Define:
 Output:
  - carmen.log.gfs, time_x_y.csv, frame_i.png, movie.gif/mp4
 
+<img src="outputs/simulator_out.gif" width="600">
+
 
