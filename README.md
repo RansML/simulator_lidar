@@ -16,4 +16,7 @@ Output:
 
 <img src="outputs/simulator_out.gif" width="600">
 
+v1 released
+v2 updated - new addition: moving robot 
+
 
