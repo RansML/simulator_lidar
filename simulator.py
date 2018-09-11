@@ -331,6 +331,27 @@ def load_obstacles(environment):
         obs6 = Obstacle(centroid=[-25, 0], dx=15, dy=15, angle=0, vel=[0, 0], acc=[0, 0])  # vehicle 1 - move right
         all_obstacles = (obs1, obs2, obs3, obs4, obs5, obs6)
         area = (-100, 100, -5, 100)
+    elif environment == 'dynamic5':  # dynamic robot in a dynamic environment
+        obs1 = Obstacle(centroid=[0, 0], dx=10, dy=10, angle=np.pi/6, vel=[0, 0], acc=[0, 0])  # block
+        obs2 = Obstacle(centroid=[30, -20], dx=5, dy=8, angle=np.pi, vel=[0, 0], acc=[0, 0])  # block
+        obs3 = Obstacle(centroid=[-30, 50], dx=4, dy=10, angle=np.pi/2.5, vel=[0, 0], acc=[0, 0])  # block
+        obs4 = Obstacle(centroid=[3, -20], dx=10, dy=10, angle=np.pi/4, vel=[0, 0], acc=[0, 0])  # block
+        obs5 = Obstacle(centroid=[-50, -40], dx=2, dy=10, angle=np.pi/5, vel=[0, 0], acc=[0, 0])  # block
+        obs6 = Obstacle(centroid=[-30, -50], dx=4, dy=5, angle=np.pi/2.4, vel=[0, 0], acc=[0, 0])  # block
+        obs7 = Obstacle(centroid=[0, -50], dx=5, dy=5, angle=np.pi/4.5, vel=[0, 0], acc=[0, 0])  # block
+        obs8 = Obstacle(centroid=[25, -60], dx=15, dy=8, angle=np.pi/3, vel=[0, 0], acc=[0, 0])  # block
+        obs9 = Obstacle(centroid=[60, -50], dx=7, dy=7, angle=np.pi/0.4, vel=[0, 0], acc=[0, 0])  # block
+        obs10 = Obstacle(centroid=[60, 0], dx=6, dy=6, angle=np.pi/1, vel=[0, 0], acc=[0, 0])  # block
+        obs11 = Obstacle(centroid=[-40, -20], dx=10, dy=11, angle=np.pi/0.4, vel=[0, 0], acc=[0, 0])  # block
+        obs12 = Obstacle(centroid=[-20, -5], dx=6, dy=6, angle=np.pi/1, vel=[0, 0], acc=[0, 0])  # block
+        obs13 = Obstacle(centroid=[0, 75], dx=1, dy=100, angle=0, vel=[0, 0], acc=[0, 0])  # vertical room wall
+        obs14 = Obstacle(centroid=[75, 20], dx=100, dy=1, angle=np.pi, vel=[0, 0], acc=[0, 0])  # horizontal room wall
+        obs15 = Obstacle(centroid=[-74, 0], dx=1, dy=300, angle=0, vel=[0, 0], acc=[0, 0])  # left wall
+        obs16 = Obstacle(centroid=[74, 0], dx=1, dy=300, angle=0, vel=[0, 0], acc=[0, 0])  # right wall
+        obs17 = Obstacle(centroid=[0, 74], dx=300, dy=1, angle=0, vel=[0, 0], acc=[0, 0])  # top wall
+        obs18 = Obstacle(centroid=[0, -74], dx=300, dy=1, angle=0, vel=[0, 0], acc=[0, 0])  # bottom wall
+        all_obstacles = (obs1,obs2,obs3,obs4,obs5,obs6,obs7,obs8,obs9,obs10,obs11,obs12,obs13,obs14,obs15,obs16,obs17,obs18)
+        area = (-75, 75, -75, 75)
     elif environment == 'uiuc1':
         veh1 = Obstacle(centroid=[-23, 15], dx=3, dy=3, angle=0, vel=[0.5, 0], acc=[0, 0]) #move down
         all_obstacles = (veh1,)
@@ -387,7 +408,7 @@ def get_way_points_gui(environment, vehicle_poses=None):
 
     # plot
     pl.close('all')
-    fig = pl.figure(figsize=(10, 5))  # (9,5)
+    fig = pl.figure(figsize=(5, 5))  # (9,5)
     ax = fig.add_subplot(111)
     ax.scatter(connected_components[:, 0], connected_components[:, 1], marker='.', c='y', edgecolor='', alpha=0.2)  # obstacles
     if vehicle_poses is not None:
@@ -438,17 +459,17 @@ def get_filled_txy(dist_theta, robot_pos, realm_in_radians, n_reflections, max_l
 
 def main():
     #Step 1: output folder and file name pre
-    ofn = 'outputs/proj1/proj1'
+    ofn = 'outputs/proj1/robot1'
     output_file_ext = '.csv' #other supported formats are '.txt' or  '.gfs.log' #TODO: rember to set to 'carmen' at the end of the function, if gfs.log
 
     #Step 2: set up the environment
-    env = 'dynamic4'
+    env = 'dynamic5'
     all_obstacles, area = load_obstacles(environment=env)
 
     #Step 3: set up the robot
     n_reflections = 180
     realm_in_radians = np.pi
-    max_laser_distance = 30
+    max_laser_distance = 15
 
     #Step 4: run the robot - click on various locations on the gui and then close the gui to exit
     robot_poses = get_way_points_gui(environment=env) # Or, hard code: robot_poses = np.array([[0.0, 0.0, -45.0], [-90, 220, 0], [30.0, 30.0, 0], [40.0, 40.0, 0]]); robot_poses[:,2] *= np.pi/180
@@ -480,9 +501,14 @@ def main():
         #get the environment for plotting purposes
         connected_components = connect_segments(all_obstacle_segments)
 
+        #save robot details as for multirobot plotting
+        np.savez(ofn+'_frame_{}'.format(t), connected_components=connected_components,robot_pos=robot_pos,laser_data_xy=laser_data_xy,area=area,\
+                 robot_poses=robot_poses, dist_theta=dist_theta, n_reflections=n_reflections, max_laser_distance=max_laser_distance)
+
         #plot
+        """
         pl.close('all')
-        fig = pl.figure(figsize=(10,5)) #(9,5)
+        fig = pl.figure(figsize=(5,5)) #(9,5)
         ax = fig.add_subplot(111)
         ax.scatter(connected_components[:,0], connected_components[:,1], marker='.', c='y', edgecolor='', alpha=0.2) #obstacles
         for i in range(n_reflections): #laser beams
@@ -496,6 +522,7 @@ def main():
         ax.set_ylim([area[2], area[3]])
         #pl.tight_layout()
         pl.savefig(ofn+'_frame_{}.png'.format(t)) #Or, pl.show()
+        """
 
         #update_text_file(text_file, data=dist_theta, file_format='carmen') #TODO: automate switching between various output file types
         update_text_file(text_file, data=np.hstack((t*np.ones(laser_data_xyout_filled.shape[0])[:, np.newaxis], laser_data_xyout_filled)), file_format='txyout')
@@ -503,5 +530,75 @@ def main():
     text_file.close()
     print(output_file_name + ' created!')
 
+def multirobot_plot():
+    # output project folder
+    ofn1 = 'outputs/proj1/robot1'
+    ofn2 = 'outputs/proj1/robot2'
+    n_steps = 10000
+
+    for t in range(n_steps):
+        print('time = {}...'.format(t))
+
+        #read robot details as numpy files
+        f1_has, f2_has = True, True
+        try:
+            npzf1 = np.load(ofn1+'_frame_{}.npz'.format(t))
+        except:
+            f1_has = False
+
+        try:
+            npzf2 = np.load(ofn2+'_frame_{}.npz'.format(t))
+        except:
+            f2_has = False
+
+        connected_components = npzf1['connected_components']
+        area = npzf1['area']
+        max_laser_distance = npzf1['max_laser_distance']
+
+        #plot
+        pl.close('all')
+        fig = pl.figure(figsize=(5,5)) #(9,5)
+        ax = fig.add_subplot(111)
+        # ax.scatter([0], [0], marker='*', c='k', s=20, alpha=1.0, zorder=3, edgecolor='k')  # global origin
+        ax.scatter(connected_components[:,0], connected_components[:,1], marker='.', c='y', edgecolor='', alpha=0.2) #obstacles
+
+        #robot1
+        if f1_has is True:
+            robot1_pos = npzf1['robot_pos']
+            robot1_poses = npzf1['robot_poses']
+            laser1_data_xy = npzf1['laser_data_xy']
+            n1_reflections = npzf1['n_reflections']
+            dist1_theta = npzf1['dist_theta']
+            for i in range(n1_reflections): #laser beams
+                ax.plot(np.asarray([robot1_pos[0], laser1_data_xy[i, 0]]), np.asarray([robot1_pos[1], laser1_data_xy[i, 1]]), c='b', zorder=1, alpha=0.2)
+                if dist1_theta[i] < max_laser_distance:
+                    ax.scatter(laser1_data_xy[i,0], laser1_data_xy[i,1], marker='o', c='r', zorder=2, edgecolor='') #laser end points
+            ax.scatter(robot1_pos[0], robot1_pos[1], marker=(3, 0, robot1_pos[2]/np.pi*180), c='m', s=300, alpha=1.0, zorder=3, edgecolor='')#robot's position
+            ax.plot(robot1_poses[:,0], robot1_poses[:,1], 'k--')
+
+        #robot2
+        if f2_has is True:
+            robot2_pos = npzf2['robot_pos']
+            robot2_poses = npzf2['robot_poses']
+            laser2_data_xy = npzf2['laser_data_xy']
+            n2_reflections = npzf2['n_reflections']
+            dist2_theta = npzf2['dist_theta']
+            for i in range(n2_reflections): #laser beams
+                ax.plot(np.asarray([robot2_pos[0], laser2_data_xy[i, 0]]), np.asarray([robot2_pos[1], laser2_data_xy[i, 1]]), c='b', zorder=1, alpha=0.2)
+                if dist2_theta[i] < max_laser_distance:
+                    ax.scatter(laser2_data_xy[i,0], laser2_data_xy[i,1], marker='o', c='r', zorder=2, edgecolor='') #laser end points
+            ax.scatter(robot2_pos[0], robot2_pos[1], marker=(3, 0, robot2_pos[2]/np.pi*180), c='c', s=300, alpha=1.0, zorder=3, edgecolor='')#robot's position
+            ax.plot(robot2_poses[:,0], robot2_poses[:,1], 'k--')
+
+        ax.set_xlim([area[0], area[1]])
+        ax.set_ylim([area[2], area[3]])
+        #pl.tight_layout()
+        pl.savefig(ofn1+'multi_frame_{}.png'.format(t)) #Or,
+        #pl.show()
+        if not f1_has and not f2_has:
+            break
+
+
 if __name__ == "__main__":
     main()
+    multirobot_plot()
