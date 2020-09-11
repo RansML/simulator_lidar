@@ -21,7 +21,7 @@ Output:
 v1 released
 v2 released - new addition: moving robot 
 
-Instructions:
+Instructions: See [video](https://youtu.be/bhd1EDYTIiw)
 - Step 1: Specify the enviroment as a yaml file (see the config folder)
 - Step 2: Specify the lidar parameters such as distance, angle, etc, and file configurations at the bottom of run_simulation.py
 - Step 3: run run_simulation.py
