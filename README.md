@@ -1,4 +1,4 @@
-# Simple LIDAR Simulator
+# LIDAR Simulator for Dynamic Environments
 
 This is a simple LIDAR simulator developed in python. 
 
