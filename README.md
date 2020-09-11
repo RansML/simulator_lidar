@@ -28,4 +28,4 @@ Instructions: See [video](https://youtu.be/bhd1EDYTIiw)
 - Step 4: Draw the robot's trajectory by clicking on various locations on the gui (close to exit) or hard code the pose/s [video](https://youtu.be/bhd1EDYTIiw)
 - Output: robot's poses as a .npz file, .csv or carmen data file, all data for each time step as .npz, and images for each time step
 
-Note: Output .csv file: column1=time, column2=longitude, column3=latitude, column4=occupied/free. This file is compatible with [Bayesian Hilber Maps](https://github.com/RansML/Bayesian_Hilbert_Maps).
+Note: Output .csv file: column1=time, column2=longitude, column3=latitude, column4=occupied/free. This file is compatible with [Bayesian Hilbert Maps](https://github.com/RansML/Bayesian_Hilbert_Maps).
