@@ -1,0 +1,52 @@
+# area of the environment
+area:
+ x_min: -50
+ x_max: 50
+ y_min: 0
+ y_max: 50
+
+#all static and dynamic obstacles 
+obstacles:
+ - # wall
+  centroid_x: 0 # centroid of the obstacle
+  centroid_y: 40 # centroid of the obstacle
+  dx: 40 # width of the obstacle
+  dy: 0 # height of the obstacle
+  orientation: 18 # angle of the obstacle
+  velocity_x: 0 # velocity of the obstacle
+  velocity_y: 0 # velocity of the obstacle
+  acc_x: 0 # acceleration of the obstacle
+  acc_y: 0 # acceleration of the obstacle
+
+ - #vehicle 1 - move right
+  centroid_x: -10
+  centroid_y: 10
+  dx: 4
+  dy: 2
+  orientation: 0
+  velocity_x: 0.9
+  velocity_y: 0
+  acc_x: 0
+  acc_y: 0
+
+ - #vehicle 2 - move down
+  centroid_x: 30
+  centroid_y: 20
+  dx: 2
+  dy: 5
+  orientation: 0 
+  velocity_x: 0
+  velocity_y: -0.5
+  acc_x: 0
+  acc_y: 0
+
+ - #vehicle 3 - parked
+  centroid_x: 0
+  centroid_y: 35
+  dx: 4
+  dy: 2
+  orientation: -30
+  velocity_x: 0
+  velocity_y: 0
+  acc_x: 0
+  acc_y: 0
