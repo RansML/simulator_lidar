@@ -16,7 +16,7 @@ Define static and/or dynamic obstacles (e.g. walls, vehicles, etc.) in a yaml fi
 Output:
  - carmen.log.gfs or time_x_y_occopancy.csv, robot_pose.npz, all_data_i.npz, frame_i.png, movie.gif/mp4
 
-<img src="outputs/toy1_setting1/toy1_setting1.gif" width="600">
+<img src="outputs/toy1_setting1/toy1_setting1.gif" width="400">
 
 v1 released
 v2 released - new addition: moving robot 
@@ -28,4 +28,4 @@ Instructions:
 - Step 4: Draw the robot's trajectory by clicking on various locations on the gui (close to exit) or hard code the pose/s [video](https://youtu.be/bhd1EDYTIiw)
 - Output: robot's poses as a .npz file, .csv or carmen data file, all data for each time step as .npz, and images for each time step
 
-Note: Output .csv file: column1=time, column2=longitude, column3=latitude, column4=occupied/free. This file is compatible with [Bayesian Hilber Maps](https://github.com/RansML/Bayesian_Hilbert_Maps)
+Note: Output .csv file: column1=time, column2=longitude, column3=latitude, column4=occupied/free. This file is compatible with [Bayesian Hilber Maps](https://github.com/RansML/Bayesian_Hilbert_Maps).
